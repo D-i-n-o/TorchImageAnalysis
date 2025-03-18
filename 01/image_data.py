@@ -1,19 +1,20 @@
-import torchvision.transforms as transforms
 import os
+import torch
+import torchvision.transforms as transforms
 
-from tkinter import Image
+from PIL import Image
 from torch.utils.data import Dataset
 
 NUM_CLASSES = 6
 NUM_IMAGES = 17034
 
 CLASS_TO_IDX = {
-    'building': 0,
-    'glacier': 1,
-    'mountain': 2,
-    'sea': 3,
-    'street': 4,
-    'forest': 5, 
+    'buildings': 0,
+    'forest': 1, 
+    'glacier': 2,
+    'mountain': 3,
+    'sea': 4,
+    'street': 5,
 }
 
 class ImageData(Dataset):

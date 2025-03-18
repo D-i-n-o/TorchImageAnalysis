@@ -75,16 +75,20 @@ def predict(model, test_loader, device):
 
 if __name__ == '__main__':
     script_dir = os.path.dirname(__file__)
+    
     data_dir = os.path.join(script_dir, 'data')
     train_dir = os.path.join(data_dir, 'train')
     val_dir = os.path.join(data_dir, 'val')
     test_dir = os.path.join(data_dir, 'test')
 
-    transform = None
+    image_transform = transforms.Compose([
+        transforms.Resize((150, 150)),
+    ])
+
     train_data = ImageData(
         root_dir = data_dir,
         data_dir = train_dir,
-        transform = transform
+        transform = image_transform
     )
 
     model = ResNet(
@@ -93,7 +97,7 @@ if __name__ == '__main__':
         num_classes = NUM_CLASSES
     )
 
-    data_loader = DataLoader(train_dir, batch_size = 32, shuffle = True)
+    data_loader = DataLoader(train_data, batch_size = 32, shuffle = True)
 
     optimizer = torch.optim.Adam(model.parameters(), lr = 0.001)
     criterion = torch.nn.CrossEntropyLoss()
@@ -109,12 +113,14 @@ if __name__ == '__main__':
         torch.save(model.state_dict(), model_file)
         model_file = os.path.join(script_dir, f'model_epoch_{epoch}.pth')
         
+        print(f'Epoch {epoch + 1}, Loss: {running_loss}')
+        
     model.eval()
 
     val_data = ImageData(
         root_dir = data_dir,
         data_dir = val_dir,
-        transform = transform
+        transform = image_transform
     )
     test_loader = DataLoader(val_data, batch_size=32, shuffle=False)
     

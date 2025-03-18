@@ -77,7 +77,8 @@ def stratified_split(data_dir, output_dir, val_size, test_size):
 
 if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    data_dir = os.path.join(script_dir, 'mandatory1_data')
+    data_dir = os.path.join('/itf-fi-ml', 'shared', 'courses', 'IN3310', 'mandatory1_data')
+    
     output_dir = os.path.join(script_dir, 'data')
     # if not os.path.exists(output_dir):
     #     os.makedirs(output_dir)
